@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Retrofit</string>
+    <string name="to_do">To do</string>
+    <string name="enter_a_note">Enter a note...</string>
+    <string name="save">Save</string>
+    <string name="date">27 February 2020</string>
+    <string name="department_code">Department code</string>
+    <string name="department_name">Department Name</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="update">Update</string>
+    <string name="machinery">List Machinery</string>
+</resources>
