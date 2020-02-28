@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.example.machinery.helper.Utils;
 import com.example.machinery.model.Department;
 import com.example.retrofit.R;
 import com.example.machinery.activity.editor.MachineryActivity;
@@ -33,16 +34,12 @@ public class MainActivity extends AppCompatActivity implements MainView{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_main );
 
-        swipeRefreshLayout = findViewById( R.id.swipe_refresh );
-        recyclerView = findViewById( R.id.recycler_view );
-        recyclerView.setLayoutManager( new LinearLayoutManager( this ) );
+        initView();
 
-        fab = findViewById( R.id.add );
-        fab.setOnClickListener( view -> startActivityForResult(new Intent( this, MachineryActivity.class ), INTENT_ADD));
+        fab.setOnClickListener(
+                view -> startActivityForResult(new Intent( this, MachineryActivity.class ), INTENT_ADD));
 
-        mainPresenter = new MainPresenter( this );
         mainPresenter.getData();
 
         swipeRefreshLayout.setOnRefreshListener(
@@ -55,6 +52,17 @@ public class MainActivity extends AppCompatActivity implements MainView{
             intent.putExtra( "department_code", department_code );
             startActivityForResult( intent, INTENT_EDIT );
         });
+    }
+
+    private void initView() {
+        setContentView( R.layout.activity_main );
+
+        fab = findViewById( R.id.add );
+        swipeRefreshLayout = findViewById( R.id.swipe_refresh );
+        recyclerView = findViewById( R.id.recycler_view );
+        recyclerView.setLayoutManager( new LinearLayoutManager( this ) );
+
+        mainPresenter = new MainPresenter( this );
     }
 
     @Override
@@ -91,5 +99,9 @@ public class MainActivity extends AppCompatActivity implements MainView{
     @Override
     public void onErrorLoading(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    public boolean getNetworkAvailability() {
+        return Utils.isNetworkAvailable(getApplicationContext());
     }
 }
